@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - Legitex</title>
+  <link rel="stylesheet" href="../styles/auth.css">
+</head>
+<body class="login-body">
+
+  <div class="auth-container">
+    <!-- Logo -->
+    <img src="../assets/logo.png" alt="Legitex Logo" class="logo">
+
+    <!-- Title -->
+    <h2 class="title">Legitex</h2>
+
+    <!-- Login Form -->
+    <form id="login-form" class="login-form">
+      <label for="email" class="input-label">Email</label>
+      <input type="email" placeholder="Enter your email" id="email" class="input-field" required>
+
+      <label for="password" class="input-label">Password</label>
+      <input type="password" placeholder="Enter your password" id="password" class="input-field" required>
+
+      <!-- Forgot Password Link -->
+      <a href="#" class="forgot-password">Forgot your password?</a>
+
+      <!-- Login Button -->
+      <button type="submit" class="login-button">Login</button>
+    </form>
+
+    <!-- Sign-Up Redirect -->
+    <div class="signup-redirect">
+      <p>Don't have an account? <a href="signup.html" class="signup-link">Sign Up</a></p>
+    </div>
+
+    <!-- Google Login Button -->
+    <div class="google-login-section">
+      <p class="login-with-google-text">or login with</p>
+      <img src="../assets/google-icon.png" alt="Google Logo" class="google-logo">
+    </div>
+  </div>
+
+  <!-- Add your JS file here -->
+  <script src="auth.js"></script>
+</body>
+</html>

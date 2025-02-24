@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up - Legitex</title>
+  <link rel="stylesheet" href="../styles/signup.css">
+</head>
+<body class="signup-body">
+
+  <div class="auth-container">
+    <!-- Logo -->
+    <img src="../assets/logo.png" alt="Legitex Logo" class="logo">
+
+    <!-- Title -->
+    <h2 class="title">Legitex</h2>
+
+    <!-- Sign-Up Form -->
+    <form id="signup-form" class="signup-form">
+      <label for="email" class="input-label">Email</label>
+      <input type="email" placeholder="Enter your email" id="email" class="input-field" required>
+
+      <label for="password" class="input-label">Password</label>
+      <input type="password" placeholder="Enter your password" id="password" class="input-field" required>
+
+      <label for="confirm-password" class="input-label">Confirm Password</label>
+      <input type="password" placeholder="Confirm your password" id="confirm-password" class="input-field" required>
+
+      <!-- Sign Up Button -->
+      <button type="submit" class="signup-button">Sign Up</button>
+    </form>
+
+    <!-- Log-In Redirect -->
+    <div class="login-redirect">
+      <p>Already have an account? <a href="login.html" class="login-link">Log In</a></p>
+    </div>
+  </div>
+
+  <!-- Add your JS file here -->
+  <script src="auth.js"></script>
+</body>
+</html>
