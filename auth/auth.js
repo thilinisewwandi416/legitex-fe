@@ -1,65 +1,75 @@
-document.getElementById("login-form")?.addEventListener("submit", (e) => {
+function showToast(message) {
+  const toast = document.getElementById("toast");
+  toast.textContent = message;
+  toast.classList.add("show");
+  setTimeout(() => {
+    toast.classList.remove("show");
+  }, 3000);
+}
+
+document.getElementById("login-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if (users[email] && users[email].password === password) {
-    localStorage.setItem("loggedInUser", email);
-    window.location.href = "../popup/popup.html";
-  } else {
-    alert("Invalid email or password.");
+
+  try {
+    const response = await fetch("https://phishing-api-750285941825.asia-southeast1.run.app/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      chrome.storage.local.set({ authToken: data.token }, () => {
+        showToast("Login successful! Redirecting...");
+        setTimeout(() => {
+          window.location.href = "../popup/popup.html";
+        }, 1500);
+      });
+    } else {
+      const error = await response.json();
+      showToast(error.message || "Invalid email or password.");
+    }
+  } catch (error) {
+    showToast("An error occurred while logging in.");
   }
 });
 
-document.getElementById("signup-form")?.addEventListener("submit", (e) => {
+document.getElementById("signup-form")?.addEventListener("submit", async (e) => {
   e.preventDefault();
+
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
   const confirmPassword = document.getElementById("confirm-password").value;
+
   if (password !== confirmPassword) {
-    alert("Passwords do not match!");
+    showToast("Passwords do not match.");
     return;
   }
-  const users = JSON.parse(localStorage.getItem("users")) || {};
-  if (users[email]) {
-    alert("User already exists!");
-    return;
+
+  try {
+    const response = await fetch("https://phishing-api-750285941825.asia-southeast1.run.app/register", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
+
+    if (response.ok) {
+      showToast("Registration successful! Redirecting to login...");
+      setTimeout(() => {
+        window.location.href = "login.html";
+      }, 2000);
+    } else {
+      const error = await response.json();
+      showToast(error.message || "Registration failed.");
+    }
+  } catch (error) {
+    showToast("An error occurred during registration.");
   }
-  users[email] = { password };
-  localStorage.setItem("users", JSON.stringify(users));
-  window.location.href = "login.html";
 });
 
-document.getElementById("logout-btn")?.addEventListener("click", () => {
-  localStorage.removeItem("loggedInUser");
-  window.location.href = "../auth/login.html";
-});
-
-// Sign-Up Form Handler
-document.getElementById("signup-form")?.addEventListener("submit", (e) => {
-    e.preventDefault();
-    
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
-    const confirmPassword = document.getElementById("confirm-password").value;
-  
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-  
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-    if (users[email]) {
-      alert("An account with this email already exists!");
-      return;
-    }
-  
-    // Save user to localStorage
-    users[email] = { password };
-    localStorage.setItem("users", JSON.stringify(users));
-    alert("Account successfully created!");
-    
-    // Redirect to login page after signup
-    window.location.href = "login.html";
-  });
-  

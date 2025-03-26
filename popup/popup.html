@@ -17,7 +17,6 @@
   align-items: center;
   box-sizing: border-box;
 ">
-<script src="./popup.js"></script>
   <!-- Logo Section -->
   <img src="../assets/logo.png" alt="Legitex Logo" style="
     width: 60px;
@@ -67,8 +66,8 @@
       align-items: center;
     ">
       <span>Probability of Phishing URL:</span>
-      <span style="font-weight: bold; color: #4caf50;">0.01%</span>
-      <span style="
+      <span id="phishingConfidence" style="font-weight: bold; color: #4caf50;">0.01%</span>
+      <span id="phishingStatus" style="
         background-color: #4caf50;
         color: #ffffff;
         padding: 2px 8px;
@@ -111,8 +110,8 @@
       padding: 10px;
       border-radius: 5px;
     ">
-      <span>TSL Verified:</span>
-      <span style="font-weight: bold; color: #4caf50;">✔️</span>
+      <span>TLS Verified:</span>
+      <span id="tlsStatus" style="font-weight: bold;">Loading...</span>
     </div>
 
     <!-- Certificate Details -->
@@ -138,6 +137,7 @@
         <li><strong>Subject Alternative Names:</strong> </li>
         <li><strong>Serial Number:</strong> </li>
         <li><strong>SHA1 Thumbprint:</strong> </li>
+        <li><strong>Expiration Date:</strong> </li>
       </ul>
     </div>
   </div>
@@ -203,7 +203,18 @@
     font-size: 12px;
     margin-bottom: 20px;
   ">Previous Browsing</button>
-  
+
+    <button id="logout-btn" class="logout-button"  style="
+      padding: 10px 20px;
+      background-color: #004aad;
+      color: #ffffff;
+      border-radius: 25px;
+      border: none;
+      cursor: pointer;
+      font-size: 12px;
+      margin-bottom: 20px;
+      margin-left: 10px;">
+      Logout</button>
   </div>
   <script src="./popup.js"></script>
 </body>
