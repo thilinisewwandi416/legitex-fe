@@ -21,9 +21,9 @@ function populatePopup(response) {
     const confidence = response.phishing_check.phishing_confidence;
 
     phishingConfidence.textContent = `${confidence.toFixed(2)}%`;
-    phishingConfidence.style.color = confidence > 60 ? "#ff4d4d" : "#4caf50";
+    phishingConfidence.style.color = confidence > 50 ? "#ff4d4d" : "#4caf50";
 
-    if (confidence > 60) {
+    if (confidence > 50) {
       phishingStatus.textContent = "UNSAFE";
       phishingStatus.style.backgroundColor = "#ff4d4d";
     } else {
@@ -37,7 +37,7 @@ function populatePopup(response) {
     phishingStatus.style.fontSize = "12px";
   }
 
-  // SSL & Cert info remains unchanged...
+  // SSL Verification Info
   const tlsStatus = document.getElementById("tlsStatus");
   if (tlsStatus) {
     tlsStatus.textContent = response.ssl_check.ssl_verified ? "Verified" : "Unverified";
@@ -57,10 +57,33 @@ function populatePopup(response) {
     certFields[4].innerHTML = `<strong>Expiration Date:</strong> ${response.ssl_check.expiration_date}`;
   }
 
-  const visualSimilarity = document.querySelector("div:nth-of-type(4) div span:nth-of-type(2)");
-  if (visualSimilarity) visualSimilarity.textContent = "0.00%";
-}
+  // ✅ Visual Similarity Detection Section
+  const visualScoreSpan = document.getElementById("visualScore");
+  const visualStatusSpan = document.getElementById("visualStatus");
 
+  if (visualScoreSpan && visualStatusSpan) {
+    const similarityScore = response.visual_similarity.similarity_score;
+    const isDetected = response.visual_similarity.visual_similarity_detected;
+  
+    visualScoreSpan.textContent = `${similarityScore.toFixed(2)}%`;
+  
+    // Set score text color: Red if > 50%, otherwise green
+    visualScoreSpan.style.color = similarityScore > 50 ? "#ff4d4d" : "#4caf50";
+  
+    if (isDetected) {
+      visualStatusSpan.textContent = "YES";
+      visualStatusSpan.style.backgroundColor = "#ff4d4d"; // Red
+    } else {
+      visualStatusSpan.textContent = "NO";
+      visualStatusSpan.style.backgroundColor = "#4caf50"; // Green
+    }
+  
+    visualStatusSpan.style.color = "#ffffff";
+    visualStatusSpan.style.padding = "2px 8px";
+    visualStatusSpan.style.borderRadius = "5px";
+    visualStatusSpan.style.fontSize = "12px";
+  }  
+}
 
 
 // Analyze current tab's URL
