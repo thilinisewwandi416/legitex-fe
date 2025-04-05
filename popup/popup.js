@@ -19,23 +19,35 @@ function populatePopup(response) {
 
   if (phishingConfidence && phishingStatus) {
     const confidence = response.phishing_check.phishing_confidence;
-
+  
     phishingConfidence.textContent = `${confidence.toFixed(2)}%`;
-    phishingConfidence.style.color = confidence > 50 ? "#ff4d4d" : "#4caf50";
-
-    if (confidence > 50) {
-      phishingStatus.textContent = "UNSAFE";
-      phishingStatus.style.backgroundColor = "#ff4d4d";
+  
+    let label = "";
+    let color = "";
+  
+    if (confidence <= 10) {
+      label = "SECURE";
+      color = "#4caf50"; 
+    } else if (confidence <= 30) {
+      label = "MODERATELY SECURE";
+      color = "#ff9800"; 
+    } else if (confidence <= 50) {
+      label = "HIGH RISK";
+      color = "#ff5722"; 
     } else {
-      phishingStatus.textContent = "SAFE";
-      phishingStatus.style.backgroundColor = "#4caf50";
+      label = "DANGEROUS";
+      color = "#f44336"; 
     }
-
+  
+    phishingStatus.textContent = label;
+    phishingConfidence.style.color = color;
+    phishingStatus.style.backgroundColor = color;
+  
     phishingStatus.style.color = "#ffffff";
     phishingStatus.style.padding = "2px 8px";
     phishingStatus.style.borderRadius = "5px";
     phishingStatus.style.fontSize = "12px";
-  }
+  }  
 
   // SSL Verification Info
   const tlsStatus = document.getElementById("tlsStatus");
