@@ -3,10 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <img src="../assets/logo.png" alt="Legitex Logo" class="logo">
   <title>Recent Scans - Legitex</title>
-
-  <script src="../utils/jspdf.plugin.autotable.min.js"></script>
-  <script src="../utils/jspdf.umd.min.js"></script>
 
   <style>
     body {
@@ -67,7 +65,20 @@
       cursor: pointer;
       font-size: 14px;
     }
+    .header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo {
+      height: 60px; /* Resize logo */
+      width: auto;
+      margin-right: 15px;
+    }
   </style>
+  <script src="../utils/html2canvas.min.js"></script>
+  <script src="../utils/jspdf.umd.min.js"></script>  
 </head>
 <body>
 
@@ -88,7 +99,7 @@
   </table>
 
   <div class="generate-btn">
-    <button id="generateBtn">Generate PDF</button>
+    <button id="generateBtn">Generate</button>
   </div>
 
   <script src="recent-scans.js"></script>

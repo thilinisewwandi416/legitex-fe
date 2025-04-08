@@ -82,49 +82,25 @@ function formatRelativeTime(datetimeStr) {
   return `${days} days ago`;
 }
 
-function generatePDF() {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  doc.setFontSize(16);
-  doc.text("Legitex - Recent Scan Report", 14, 20);
-
-  const table = document.querySelector("table");
-  const rows = [];
-  const headers = [];
-
-  // Get headers
-  table.querySelectorAll("thead th").forEach(th => {
-    headers.push(th.innerText.trim());
-  });
-
-  // Get data rows
-  table.querySelectorAll("tbody tr").forEach(tr => {
-    const row = [];
-    tr.querySelectorAll("td").forEach(td => {
-      row.push(td.innerText.trim());
-    });
-    rows.push(row);
-  });
-
-  doc.autoTable({
-    head: [headers],
-    body: rows,
-    startY: 30,
-    styles: { fontSize: 10 },
-    headStyles: { fillColor: [0, 74, 173] }
-  });
-
-  const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
-  doc.save(`legitex_recent_scans_${timestamp}.pdf`);
-}
-
 document.addEventListener("DOMContentLoaded", () => {
   fetchScanData();
   setInterval(fetchScanData, 30000);
 
-  const btn = document.getElementById("generateBtn");
-  if (btn) {
-    btn.addEventListener("click", generatePDF);
-  }
+  document.getElementById("generateBtn").addEventListener("click", async () => {
+    const pdf = new window.jspdf.jsPDF();
+  
+    const table = document.querySelector("table");
+  
+    html2canvas(table).then((canvas) => {
+      const imgData = canvas.toDataURL("image/png");
+      const imgProps = pdf.getImageProperties(imgData);
+      const pdfWidth = pdf.internal.pageSize.getWidth();
+      const pdfHeight = (imgProps.height * pdfWidth) / imgProps.width;
+  
+      pdf.setFontSize(16);
+      pdf.text("Legitex - Recent Scan Report", 10, 10);
+      pdf.addImage(imgData, "PNG", 0, 20, pdfWidth, pdfHeight);
+      pdf.save("recent-scans.pdf");
+    });
+  });  
 });
