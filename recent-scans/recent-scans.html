@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Recent Scans - Legitex</title>
+
+  <script src="../utils/jspdf.plugin.autotable.min.js"></script>
+  <script src="../utils/jspdf.umd.min.js"></script>
+
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -49,6 +53,20 @@
     .url {
       word-break: break-all;
     }
+    .generate-btn {
+      margin-top: 20px;
+      display: flex;
+      justify-content: flex-end;
+    }
+    .generate-btn button {
+      padding: 10px 20px;
+      background-color: #004aad;
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 14px;
+    }
   </style>
 </head>
 <body>
@@ -68,6 +86,10 @@
     <tbody id="scanTableBody">
     </tbody>
   </table>
+
+  <div class="generate-btn">
+    <button id="generateBtn">Generate PDF</button>
+  </div>
 
   <script src="recent-scans.js"></script>
 </body>

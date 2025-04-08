@@ -14,9 +14,10 @@ async function fetchHistory(token) {
 
     const data = await res.json();
     const tableBody = document.querySelector("tbody");
-    tableBody.innerHTML = ""; 
+    tableBody.innerHTML = "";
 
-    const last10 = data.slice(-10).reverse();
+    const sorted = data.sort((a, b) => new Date(b.checked_at) - new Date(a.checked_at));
+    const last10 = sorted.slice(0, 10);
 
     last10.forEach(entry => {
       const tr = document.createElement("tr");
@@ -39,7 +40,7 @@ async function fetchHistory(token) {
       const score = (entry.score || "").toLowerCase();
       const title = (entry.title || "").toLowerCase();
       const issue = (entry.issue || "").toLowerCase();
-      
+
       if (score === "critical") {
         label = "DANGEROUS";
         color = "#f44336";
@@ -50,7 +51,6 @@ async function fetchHistory(token) {
         label = "SECURE";
         color = "#4caf50";
       }
-      
 
       Object.assign(riskTd.style, {
         padding: "10px",
@@ -84,19 +84,20 @@ async function fetchHistory(token) {
   }
 }
 
-  
-  document.addEventListener("DOMContentLoaded", () => {
-    chrome.storage.local.get(["authToken"], (result) => {
-      const token = result.authToken;
-      if (token) {
-        fetchHistory(token);
-      } else {
-        console.warn("No auth token found.");
-      }
+document.addEventListener("DOMContentLoaded", () => {
+  chrome.storage.local.get(["authToken"], (result) => {
+    const token = result.authToken;
+    if (token) {
+      fetchHistory(token);
+    } else {
+      console.warn("No auth token found.");
+    }
+  });
+
+  const moreBtn = document.getElementById("moreDetailsBtn");
+  if (moreBtn) {
+    moreBtn.addEventListener("click", () => {
+      chrome.tabs.create({ url: "../recent-scans/recent-scans.html" });
     });
-  });
-  
-  document.getElementById("moreDetailsBtn").addEventListener("click", () => {
-    chrome.tabs.create({ url: "../recent-scans/recent-scans.html" }); 
-  });
-  
+  }
+});
