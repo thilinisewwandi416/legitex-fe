@@ -2,12 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Reset Password - Legitex</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OTP - Legitex</title>
 </head>
 <body style="
   width: 300px;
-  height: 400px;
+  height: 350px;
   margin: 0;
   padding: 20px;
   font-family: Arial, sans-serif;
@@ -25,28 +25,20 @@
     margin-top: 5px;
     margin-bottom: 10px;
   " />
- 
+
   <h2 style="
-    font-size: 18px;
+    font-size: 15px;
     color: #004aad;
     margin-bottom: 10px;
-  ">Forgot password?</h2>
+  ">Enter Your OTP here</h2>
 
-  <p style="
-    font-size: 12px;
-    color: #363434;
-    text-align: center;
-    margin-bottom: 20px;
-  ">Check your email to get OTP</p>
-
-  <!-- Form -->
-  <form id="reset-password-form" style="
+  <form id="otp-form" style="
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
   ">
-    <input type="email" placeholder="Enter your email here" id="email" required style="
+    <input type="text" placeholder="Enter OTP" id="otp" required style="
       width: 80%;
       padding: 10px;
       margin-bottom: 20px;
@@ -82,10 +74,10 @@
         border: none;
         cursor: pointer;
         font-size: 12px;
-      ">Reset Password</button>
+      ">Submit</button>
     </div>
   </form>
 
-  <script src="reset-password.js" defer></script>
+  <script src="otp.js" defer></script>
 </body>
 </html>

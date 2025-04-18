@@ -69,7 +69,7 @@ function populatePopup(response) {
     certFields[4].innerHTML = `<strong>Expiration Date:</strong> ${response.ssl_check.expiration_date}`;
   }
 
-  // ✅ Visual Similarity Detection Section
+  //Visual Similarity Detection Section
   const visualScoreSpan = document.getElementById("visualScore");
   const visualStatusSpan = document.getElementById("visualStatus");
 
